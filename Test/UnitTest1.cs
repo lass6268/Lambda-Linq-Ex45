@@ -14,12 +14,31 @@ namespace Test
             [TestInitialize]
             public void Arrange()
             {
-                order = new Order();
-                order.AddProduct(new Product { Name = "Mælk", Value = 10.0 });
-                order.AddProduct(new Product { Name = "Smør", Value = 15.0 });
-                order.AddProduct(new Product { Name = "Pålæg", Value = 20.0 });
-            }
-            [TestMethod]
+            order = new Order();
+            order.AddProduct(new Product
+            {
+                Name = "Mælk",
+                Value = 10.0,
+                AvailableFrom = new DateTime(2018, 3, 1),
+                AvailableTo = new DateTime(2018, 3, 5)
+            });
+            order.AddProduct(new Product
+            {
+                Name = "Smør",
+                Value = 15.0,
+                AvailableFrom = new DateTime(2018, 3, 3),
+                AvailableTo = new DateTime(2018, 3, 4)
+            });
+            order.AddProduct(new Product
+            {
+                Name = "Pålæg",
+                Value = 20.0,
+                AvailableFrom = new DateTime(2018, 3, 4),
+                AvailableTo = new DateTime(2018, 3, 7)
+            });
+
+        }
+        [TestMethod]
             public void TenPercent_Test()
             {
                 Assert.AreEqual(4.5, Bonuses.TenPercent(45.0));
@@ -73,6 +92,15 @@ namespace Test
             // Use FlatTwoIfAmountMoreThanFive lambda expresssion as parameter to GetBonus
             Assert.AreEqual(2.0, order.GetBonus(x => x > 5.0 ? 2.0 : 0.0));
             }
+
+        [TestMethod]
+        public void GetTotalPriceByLambdaParameter_Test()
+        {
+            Assert.AreEqual(40.5, order.GetTotalPrice(x => x * 0.1));
+
+            Assert.AreEqual(43.0, order.GetTotalPrice(x => x > 5.0 ? 2.0 : 0.0));
+        }
+
 
 
     }

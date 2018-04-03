@@ -8,7 +8,7 @@ namespace Testframework
 {
     public class Order
     {
-        public DG_BonusProvider Bonus { get; set; }
+        public Func<double,double> Bonus { get; set; }
 
         private List<Product> _products = new List<Product>();
 
@@ -18,14 +18,10 @@ namespace Testframework
         }
         public double GetValueOfProducts()
         {
-            double valueOfProducts = 0.0;
 
-            foreach (Product p in _products)
-            {
-                valueOfProducts += p.Value;
-            }
+            return _products.Sum(x => x.Value);
 
-            return valueOfProducts;
+            
         }
         public double GetBonus()
         {
@@ -36,9 +32,14 @@ namespace Testframework
             return GetValueOfProducts()-GetBonus(); ;
         }
 
-        public double GetBonus(Func<double, double> tenPercent)
+        public double GetBonus(Func<double, double> bonus)
         {
-            return tenPercent(GetValueOfProducts());
+            return bonus(GetValueOfProducts());
+        }
+        public double GetTotalPrice(Func<double, double> bonus)
+        {
+
+            return GetValueOfProducts() - GetBonus(bonus);
         }
     }
 }

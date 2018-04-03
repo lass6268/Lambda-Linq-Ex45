@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Testframework
 
 {
-    public delegate double DG_BonusProvider(double amount);
+    
 
     public static class Bonuses
     {
