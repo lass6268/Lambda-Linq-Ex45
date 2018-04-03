@@ -101,6 +101,22 @@ namespace Test
             Assert.AreEqual(43.0, order.GetTotalPrice(x => x > 5.0 ? 2.0 : 0.0));
         }
 
+        [TestMethod]
+        public void GetValueOfProductsByDate_Test()
+        {
+            Assert.AreEqual(0.0, order.GetValueOfProducts(new DateTime(2018, 2, 28)));
+            Assert.AreEqual(10.0, order.GetValueOfProducts(new DateTime(2018, 3, 2)));
+            Assert.AreEqual(25.0, order.GetValueOfProducts(new DateTime(2018, 3, 3)));
+            Assert.AreEqual(45.0, order.GetValueOfProducts(new DateTime(2018, 3, 4)));
+        }
+        [TestMethod]
+        public void GetTotalPriceByDate_Test()
+        {
+            Assert.AreEqual(0.0, order.GetTotalPrice(new DateTime(2018, 2, 28), x => x * 0.2));
+            Assert.AreEqual(8.0, order.GetTotalPrice(new DateTime(2018, 3, 2), x => x * 0.2));
+            Assert.AreEqual(20.0, order.GetTotalPrice(new DateTime(2018, 3, 3), x => x * 0.2));
+            Assert.AreEqual(36.0, order.GetTotalPrice(new DateTime(2018, 3, 4), x => x * 0.2));
+        }
 
 
     }

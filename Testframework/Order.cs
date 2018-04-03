@@ -23,6 +23,13 @@ namespace Testframework
 
             
         }
+        public double GetValueOfProducts(DateTime dateTime)
+        {
+
+            //return _products.Where(x => x.AvailableFrom <= dateTime && x.AvailableTo >= dateTime).Sum(x=>x.Value);
+            return _products.Sum(x => x.AvailableFrom <= dateTime && x.AvailableTo >= dateTime ? x.Value : 0);
+
+        }
         public double GetBonus()
         {
             return Bonus(GetValueOfProducts());
@@ -40,6 +47,15 @@ namespace Testframework
         {
 
             return GetValueOfProducts() - GetBonus(bonus);
+        }
+
+        public double GetTotalPrice(DateTime dateTime, Func<double, double> bonus)
+        {
+            return GetValueOfProducts(dateTime) - GetBonus(bonus,dateTime);
+        }
+        public double GetBonus(Func<double, double> bonus, DateTime dateTime)
+        {
+            return bonus(GetValueOfProducts(dateTime));
         }
     }
 }
